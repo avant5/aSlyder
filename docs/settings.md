@@ -1,4 +1,4 @@
-#aSlyder Settings
+# aSlyder Settings
 
 The settings for the aSlyder slideshow are done entirely with CSS classes on the HTML page where the slideshow resides.  No configurations are done inside of any javascript.  It is recommended to use the current class names, but the legacy classes remain in the code for backwards compatibility at this time.  In the future, the legacy classes may be deprecated and eventually removed from the code.
 
@@ -7,12 +7,12 @@ The settings for the aSlyder slideshow are done entirely with CSS classes on the
 With no added classes, the slideshow runs simply as the basic expected slideshow behavior.  The series of slides each moving into place from the right side of the slideshow area, and returning to slide one (left-most) at the completion of the series.  See the default settings at the bottom of this document for a complete list of all default settings and behaviors.
 
 ### aslyder-flow
-Legacy: contslide
+###### Legacy: contslide
 
 Flow or Continuous-slide style is similar to the default slideshow style, except that the slides continually flow from the right, rather than snapping back to the beginning at the end of the slideshow.  This setting only impacts the default slide-type slideshow.  This setting has no effect on fade or peel type transitions.
 
 ### aslyder-fade
-Legacy: fadetype
+###### Legacy: fadetype
 
 The Fade-type slideshow stacks the slides on "top" of each other and the slides fade out to reveal the slide underneath.
 
@@ -35,7 +35,7 @@ speed-800
 > note: The transition speed settings differ from the old version of aSlyder where the transition times overlapped and transition time was a part of the slide display time (pause).  The two now run independently, so the transition time starts after the slide display time, and the new slide pause time begins after the transition completes.  In the previous version of aSlyder, setting the pause and speed time to the same amount would result in a non-stop action display.  To achieve this same effect now a pause time of '0' would be needed.
 
 ### Default Settings
-type: Slide + snapback
-pause: 5000 (ms)
-speed: 800 (ms)
+- type: Slide + snapback
+- pause: 5000 (ms)
+- speed: 800 (ms)
 
