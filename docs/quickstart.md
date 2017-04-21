@@ -22,7 +22,7 @@ Slides can contain any manner of content: images, text, video, even other HTML l
 
 ## The CSS
 
-The CSS for the slideshow is simple but varies slightly depending on the style of slideshow desired.  For fade and peel-off styles the CSS is supposed to be automatically set up by the program, but at the time of this writing that feature has not been transferred from the original.
+The CSS for the slideshow is simple but varies slightly depending on the style of slideshow desired.  For fade and peel-off styles the CSS is supposed to be automatically set up by the program, but at the time of this writing that feature has not been transferred from the original version of aSlyder.
 
 ```
 #aslyder { position:relative; overflow:hidden; height:300px; width:550px;}
