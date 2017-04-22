@@ -1,4 +1,4 @@
-# Quickstart Guide (WIP)
+# Quickstart Guide
 
 This application was developed as a tool for web professionals, and as such some assumptions are made about the reader.  Basic HTML and CSS skills are required, as well as the ability to understand a server file system and to link Javascript files to an HTML document.  This guide does not cover these very basic concepts, and only addresses specific setup and configuration of the Slideshow itself.
 
