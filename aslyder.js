@@ -12,7 +12,6 @@
 	var _tp; // transition delay
 
 	var _it = 0; // flow style - snapback default (0), flow illusion = 1
-	var _ss; // slidestyle
 	var _c = 0; // current slide marker set in starter - need 1 for movers, 0 for faders
 	var _slideStyle = "slide"; // the default, unless over-ridden by css class
 	var _ss = "snap"; // For flow illusion vs snap-back form
@@ -41,7 +40,61 @@
 	}
 
 	function slidePeel() {
-		// peel-off form
+
+		switch ( _slideDirection ) {
+			case "up":
+				$("#aslyder > ul > li:eq("+ _c +")").animate({top:-_sh},_st,function(){
+					if ( _c >= _slideCount - 1 ) {
+						$("#aslyder > ul > li").animate({top:'0'},0);
+						_c = 0;
+						t = setTimeout(slidePeel,_sp);
+					} else {
+						_c++;
+						t = setTimeout(slidePeel,_sp);
+					}
+				});
+				break;
+			case "left":
+				$("#aslyder > ul > li:eq("+ _c +")").animate({left:-_sw},_st,function(){
+					if ( _c >= _slideCount - 1 ) {
+						$("#aslyder > ul > li").animate({left:'0'},0);
+						_c = 0;
+						t = setTimeout(slidePeel,_sp);
+					} else {
+						_c++;
+						t = setTimeout(slidePeel,_sp);
+					}
+				});
+				break;
+
+			case "right":
+				$("#aslyder > ul > li:eq("+ _c +")").animate({left:_sw},_st,function(){
+					if ( _c >= _slideCount - 1 ) {
+						$("#aslyder > ul > li").animate({left:'0'},0);
+						_c = 0;
+						t = setTimeout(slidePeel,_sp);
+					} else {
+						_c++;
+						t = setTimeout(slidePeel,_sp);
+					}
+				});
+				break;
+
+			default:
+				$("#aslyder > ul > li:eq("+ _c +")").animate({top:_sh},_st,function(){
+					if ( _c >= _slideCount - 1 ) {
+						$("#aslyder > ul > li").animate({top:'0'},0);
+						_c = 0;
+						t = setTimeout(slidePeel,_sp);
+					} else {
+						_c++;
+						t = setTimeout(slidePeel,_sp);
+					}
+				});
+
+		}
+
+		navUpdate(_c);
 	}
 
 	function fadetype() {
@@ -78,6 +131,8 @@
 
 	$(window).on("load",function() {
 
+		// Assumes the developer has already 
+
 		$("#aslyder-nav").html("<ul></ul>");
 		$("#aslyder > ul > li").each(function(_index){
 			$("#aslyder-nav ul").append("<li>" + (_index + 1) + "</li>");
@@ -100,15 +155,26 @@
 				// Most of these have migrated to class checks.  This is only needed where it needs to be split to set a variable
 				if ( vv.substr(0,6)=="pause-" ) {
 					_sp = vv.substr(6);
-					if ( isNaN(_sp) ) { _sp = 3000; }
+					if ( isNaN(_sp) ) { _sp = 3000; } else { _sp = Math.abs(_sp); }
 				}
 				if ( vv.substr(0,5)=="peel-" ) {
 					_slideStyle = "peel";
 					$("#aslyder > ul > li:first-child").clone().appendTo("#aslyder > ul");
+					_slideDirection = vv.substr(5);
+					switch ( _slideDirection ) {
+						// guarantee a proper direction. This way, cuz I suck at regexes!
+						case "up":
+						case "left":
+						case "right":
+						break;
+						default:
+							_slideDirection = "down";
+					}
+					console.log("dir: " + _slideDirection ); // DEBUG
 				}
 				if ( vv.substr(0,6)=="speed-" ) {
 					_st = vv.substr(6);
-					if ( isNaN(_st) ) { _st = 800; }
+					if ( isNaN(_st) ) { _st = 800; } else { _sp = Math.abs(_sp); }
 				}
 
 			});
@@ -116,9 +182,10 @@
 
 		switch ( _slideStyle ) {
 			case "fade":
+			case "peel":
 				// Reverse the stacking order so first slide is on top
 				$("#aslyder").find("li").each(function(){
-					$(this).css({'z-index':_zIndex});
+					$(this).css({'z-index':_zIndex,'position':'absolute'});
 					_zIndex--;
 				});
 			break;
@@ -132,6 +199,9 @@
 		switch ( _slideStyle ) {
 			case "fade":
 				t = setTimeout(fadetype,_sp);
+			break;
+			case "peel":
+				t = setTimeout(slidePeel,_sp);
 			break;
 			default:
 				_c = 1;
