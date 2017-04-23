@@ -20,7 +20,7 @@ The Fade-type slideshow stacks the slides on "top" of each other and the slides 
 
 ### peel-{direction}
 
-The peel-type transition imitates the sliding of a card off the top of a stack of cards, rather than the entire set of slides moving into a position.  The peel transition has four available directions, up|down|left|right.  The direction is appended to the class to indicate the direction of choice.  Default direction: down.
+The peel-type transition imitates the sliding of a card off the top of a stack of cards, rather than the entire set of slides moving into a position.  The peel transition has five available directions, up|down|left|right|random.  The direction is appended to the class to indicate the direction of choice.  If random is selected, a random choice of the other four directions will be chosen for each slide.  Default direction: down.
 
 ```
 peel-right

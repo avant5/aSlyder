@@ -15,7 +15,11 @@
 	var _c = 0; // current slide marker set in starter - need 1 for movers, 0 for faders
 	var _slideStyle = "slide"; // the default, unless over-ridden by css class
 	var _ss = "snap"; // For flow illusion vs snap-back form
+
 	var _slideDirection = "left"; // default - peel off direction only for peeltype() transitions
+	var _slideRandom = false; // for peel type transition, randomize the direction. Over-rides _slideDirection when true
+	var _dirs = ["up","down","left","right"];
+
 	var _sp = 5000; // Slide pause time.  The time the slide is in display before moving to the next slide in ms.
 	var _st = 800; // Slide transition time.  The amount of time the slide moves/fades to the next slide in ms.
 
@@ -41,11 +45,15 @@
 
 	function slidePeel() {
 
+		if ( _slideRandom ) {
+			_slideDirection = _dirs[Math.floor( Math.random() * _dirs.length )];
+		}
+
 		switch ( _slideDirection ) {
 			case "up":
 				$("#aslyder > ul > li:eq("+ _c +")").animate({top:-_sh},_st,function(){
 					if ( _c >= _slideCount - 1 ) {
-						$("#aslyder > ul > li").animate({top:'0'},0);
+						$("#aslyder > ul > li").animate({top:'0',left:'0'},0);
 						_c = 0;
 						t = setTimeout(slidePeel,_sp);
 					} else {
@@ -57,7 +65,7 @@
 			case "left":
 				$("#aslyder > ul > li:eq("+ _c +")").animate({left:-_sw},_st,function(){
 					if ( _c >= _slideCount - 1 ) {
-						$("#aslyder > ul > li").animate({left:'0'},0);
+						$("#aslyder > ul > li").animate({top:'0',left:'0'},0);
 						_c = 0;
 						t = setTimeout(slidePeel,_sp);
 					} else {
@@ -70,7 +78,7 @@
 			case "right":
 				$("#aslyder > ul > li:eq("+ _c +")").animate({left:_sw},_st,function(){
 					if ( _c >= _slideCount - 1 ) {
-						$("#aslyder > ul > li").animate({left:'0'},0);
+						$("#aslyder > ul > li").animate({top:'0',left:'0'},0);
 						_c = 0;
 						t = setTimeout(slidePeel,_sp);
 					} else {
@@ -83,7 +91,7 @@
 			default:
 				$("#aslyder > ul > li:eq("+ _c +")").animate({top:_sh},_st,function(){
 					if ( _c >= _slideCount - 1 ) {
-						$("#aslyder > ul > li").animate({top:'0'},0);
+						$("#aslyder > ul > li").animate({top:'0',left:'0'},0);
 						_c = 0;
 						t = setTimeout(slidePeel,_sp);
 					} else {
@@ -167,10 +175,12 @@
 						case "left":
 						case "right":
 						break;
+						case "random":
+							_slideRandom = true;
+							_slideDirection = "down"; // not needed, but just in case
 						default:
 							_slideDirection = "down";
 					}
-					console.log("dir: " + _slideDirection ); // DEBUG
 				}
 				if ( vv.substr(0,6)=="speed-" ) {
 					_st = vv.substr(6);
